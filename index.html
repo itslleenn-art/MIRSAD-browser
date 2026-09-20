@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>مرصاد | متصفح ذكي</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #050807;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+
+    header {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: #08110d;
+      border-bottom: 1px solid #163d2a;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #38d996;
+    }
+
+    .status {
+      font-size: 13px;
+      color: #7ff0bb;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 35px 20px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .welcome h1 {
+      font-size: clamp(30px, 6vw, 55px);
+      margin-bottom: 10px;
+    }
+
+    .welcome p {
+      color: #8ca99b;
+      font-size: 16px;
+    }
+
+    .browser {
+      background: #0a120e;
+      border: 1px solid #19452f;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 0 40px rgba(28, 190, 120, 0.08);
+    }
+
+    .address-bar {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #245b40;
+      background: #050907;
+      color: white;
+      outline: none;
+      font-size: 15px;
+      direction: ltr;
+    }
+
+    input:focus {
+      border-color: #38d996;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 0 22px;
+      background: #1c8f61;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #27b879;
+    }
+
+    .tools {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .tool {
+      padding: 11px 16px;
+      background: #0d1d15;
+      border: 1px solid #19452f;
+      border-radius: 10px;
+      color: #9be9c5;
+      cursor: pointer;
+    }
+
+    .tool:hover {
+      background: #123322;
+    }
+
+    .result {
+      margin-top: 25px;
+      padding: 25px;
+      border-radius: 15px;
+      background: #07100b;
+      border: 1px solid #163d2a;
+      display: none;
+    }
+
+    .result h2 {
+      color: #38d996;
+      margin-bottom: 12px;
+    }
+
+    .safe {
+      color: #55e6a5;
+      font-weight: bold;
+    }
+
+    .warning {
+      color: #ffca68;
+      font-weight: bold;
+    }
+
+    .info {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      padding: 20px;
+      background: #08110d;
+      border: 1px solid #163d2a;
+      border-radius: 15px;
+    }
+
+    .card h3 {
+      color: #38d996;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #91a69b;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      color: #5f786c;
+      font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+
+      header {
+        height: 60px;
+        padding: 0 15px;
+      }
+
+      .logo {
+        font-size: 21px;
+      }
+
+      .status {
+        font-size: 11px;
+      }
+
+      main {
+        padding: 25px 12px;
+      }
+
+      .browser {
+        padding: 12px;
+      }
+
+      .address-bar {
+        flex-direction: column;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+        padding: 14px;
+      }
+
+      .info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🛡️ مرصاد</div>
+    <div class="status">● النظام جاهز</div>
+  </header>
+
+  <main>
+
+    <section class="welcome">
+      <h1>مرصاد</h1>
+      <p>متصفح ذكي لرصد المحتوى قبل أن يصل إليك.</p>
+    </section>
+
+    <section class="browser">
+
+      <div class="address-bar">
+
+        <input
+          id="url"
+          type="text"
+          placeholder="اكتب رابط الموقع هنا..."
+        >
+
+        <button onclick="openSite()">
+          فتح
+        </button>
+
+      </div>
+
+      <div class="tools">
+
+        <div class="tool" onclick="scanContent()">
+          🛡️ فحص المحتوى
+        </div>
+
+        <div class="tool" onclick="clearInput()">
+          مسح
+        </div>
+
+      </div>
+
+      <div class="result" id="result">
+
+        <h2>نتيجة الفحص</h2>
+
+        <p id="resultText">
+          جارٍ تحليل المحتوى...
+        </p>
+
+      </div>
+
+    </section>
+
+    <section class="info">
+
+      <div class="card">
+        <h3>🔎 رصد</h3>
+        <p>
+          يساعد مرصاد على فحص المحتوى واكتشاف مؤشرات التضليل أو التلاعب.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>🧠 تحليل ذكي</h3>
+        <p>
+          واجهة مهيأة لإضافة نماذج الذكاء الاصطناعي مستقبلًا.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>🔐 حماية</h3>
+        <p>
+          تجربة تصفح تركز على الوعي بالمحتوى قبل التفاعل معه.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    مرصاد — رصد قبل التفاعل
+  </footer>
+
+
+  <script>
+
+    function openSite() {
+
+      let url = document.getElementById("url").value.trim();
+
+      if (url === "") {
+        alert("اكتب رابطًا أولًا");
+        return;
+      }
+
+      if (!url.startsWith("http://") &&
+          !url.startsWith("https://")) {
+
+        url = "https://" + url;
+      }
+
+      window.open(url, "_blank");
+    }
+
+
+    function scanContent() {
+
+      const result = document.getElementById("result");
+      const text = document.getElementById("resultText");
+
+      result.style.display = "block";
+
+      text.innerHTML =
+        "🔄 يتم تحليل المحتوى...";
+
+      setTimeout(function() {
+
+        text.innerHTML =
+          '<span class="safe">✓ تم إجراء الفحص الأولي.</span><br><br>' +
+          'هذه نسخة تجريبية من مرصاد. ' +
+          'يمكن ربطها لاحقًا بنموذج ذكاء اصطناعي حقيقي لتحليل المحتوى.';
+
+      }, 1200);
+    }
+
+
+    function clearInput() {
+
+      document.getElementById("url").value = "";
+
+      document.getElementById("result").style.display = "none";
+
+    }
+
+  </script>
+
+</body>
+</html>
